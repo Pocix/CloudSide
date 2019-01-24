@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>table模块快速使用</title>
+    <link rel="stylesheet" href="./plugins/layui/css/layui.css" media="all">
+    
+</head>
+
+<body>
+	<div class="layui-fluid main">
+	    <table class="layui-table" lay-data="{height:315, page:true, id:'test',height: 'full-25'}" lay-filter="tables" id="tables">
+	        <thead>
+	            <tr>
+	                <th lay-data="{field:'serviceId', width:160, sort: true}">服务ID</th>
+	                <th lay-data="{field:'host', width:160}">主机地址</th>
+	                <th lay-data="{field:'port', width:160,  sort: true}">端口</th>
+	                <th lay-data="{field:'uri', width:160}">服务地址</th>
+	                <th lay-data="{field:'secure', width:100}">secure</th>
+	                <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}">操作</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	<% for(vo in SvcList){ %>
+	        			<tr>
+					      <td>${vo.serviceId }</td>
+					      <td>${vo.host }</td>
+					      <td>${vo.port }</td>
+					      <td>${vo.uri }</td>
+					      <td>${vo.secure }</td>
+					    </tr>
+	        	<%}%>
+	        </tbody>
+	    </table>
+	</div>
+    <script src="./plugins/layui/layui.js"></script>
+    
+    <script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-mini" lay-event="relation">关联</a>
+	</script>
+	
+    <script>
+        layui.use(['table','layer'], function() {
+            var table = layui.table;
+            
+          //监听工具条
+          table.on('tool(tables)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+            ,layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent === 'relation'){
+              layer.msg('查看操作');
+            }
+          });
+        });
+    </script>
+    
+</body>
+
+</html>

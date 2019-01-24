@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>table模块快速使用</title>
+<link rel="stylesheet" href="/plugins/layui/css/layui.css" media="all">
+<link rel="stylesheet" href="/plugins/jquery/Transfer.css" media="all">
+<style type="text/css">
+	.layui-fluid {
+	    position: relative;
+	    margin: 0 auto;
+	    padding: 0 65px;
+	}
+</style>
+</head>
+
+<body>
+	<div class="layui-fluid main" >
+		<div style="margin:auto;">
+			<input type="text" id="groupid" value="${groupid==null?'':groupid}" style="display:none"/>
+			<div class="ty-transfer mt20 ml20" id="ued-transfer-1">
+				<div class="fl ty-transfer-list transfer-list-left">
+					<div class="ty-transfer-list-head">全部网关路由</div>
+
+					<div class="ty-transfer-list-body">
+						<ul class="ty-tree-select">
+							<% for(vo in allRoute){ %>
+								    <li>
+										<div class="ty-tree-div">
+											<label class="tyue-checkbox-wrapper"> <span
+												class="tyue-checkbox"> <input type="checkbox"
+													class="tyue-checkbox-input" id="tyue-checkbox-blue" value="${vo.id }">
+													<span class="tyue-checkbox-circle"> </span>
+											</span> <span class="tyue-checkbox-txt" title="${vo.apiName }">
+													${vo.apiName }<br>[${vo.path }]</span>
+											</label>
+										</div>
+									</li>
+				        	<%}%>
+
+						</ul>
+					</div>
+					<div class="ty-transfer-list-foot">
+						<div class="ty-tree-div">
+							<div class="tyc-check-blue fl">
+								<input type="checkbox" class="transfer-all-check"
+									id="tyc-check-blue"> <span> </span>
+							</div>
+							<div class="ty-tree-text">全选</div>
+						</div>
+					</div>
+				</div>
+				<div class="fl ty-transfer-operation">
+					<span class="ty-transfer-btn-toright to-switch"> </span><span
+						class="ty-transfer-btn-toleft to-switch"> </span>
+						<span class="ty-transfer-btn-toOK to-switch" onclick="saveGroup()"></span>
+				</div>
+				<div class="fl ty-transfer-list transfer-list-right">
+					<div class="ty-transfer-list-head">已有网关路由</div>
+					<div class="ty-transfer-list-body">
+						<ul class="ty-tree-select">
+							<% for(vo in myRoute){ %>
+								    <li>
+										<div class="ty-tree-div">
+											<label class="tyue-checkbox-wrapper"> <span
+												class="tyue-checkbox"> <input type="checkbox" name="myGroup"
+													class="tyue-checkbox-input" id="tyue-checkbox-blue2" value="${vo.id }">
+													<span class="tyue-checkbox-circle"> </span>
+											</span> <span class="tyue-checkbox-txt" title="${vo.apiName}">
+													${vo.apiName }<br>[${vo.path }]</span>
+											</label>
+										</div>
+									</li>
+				        	<%}%>
+						</ul>
+					</div>
+					<div class="ty-transfer-list-foot">
+						<div class="ty-tree-div">
+							<div class="tyc-check-blue fl">
+								<input type="checkbox" class="transfer-all-check"
+									id="tyc-check-blue"> <span> </span>
+							</div>
+							<div class="ty-tree-text">全选</div>
+						</div>
+					</div>
+				</div>
+				<div class="clearboth"></div>
+
+			</div>
+
+		</div>
+	</div>
+	<script src="/plugins/layui/layui.js"></script>
+	<script src="/plugins/jquery/jquery.min.js"></script>
+	<script>
+		layui.use([ 'form' ], function() {
+			var form = layui.form, $ = layui.jquery;
+			$("#ued-transfer-1").transferItem();
+			var inputs = $(".ransfer-list-left").find("input");
+		});
+		
+		function saveGroup(){
+			var routes = "";
+			$('.transfer-list-right input').each(function(i, item) {
+				if($(item).attr("value")){
+					routes += $(item).attr("value")+",";
+				}
+			});
+			var datas = {};
+			datas.id = $('#groupid').attr("value");
+			datas.routes = routes.substr(0,routes.length-1);
+			$.ajax({
+	            type: 'POST',
+	            url: '/group2route/upd',
+	            dataType:'json',
+                data: datas,
+                async: true,
+                success: function (result) {
+                    if (result.errcode == 0) {
+                        layer.msg('success:操作成功', {icon: 1, time:800});
+                        setTimeout(function(){
+                        	var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                            parent.layer.close(index);
+                        },1000);
+                    } else {
+                        consol.alert(result.errcode);
+                        layer.msg('eles:操作失败！'+result.errmsg, {icon: 2, time:1000});
+                    }
+                },
+                error: function (result, type) {
+                    layer.msg('error:操作失败！', { icon: 2, time:1000 });
+                    window.parent.location.reload(); //刷新父页面
+                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                    parent.layer.close(index);
+                }
+            });
+		}
+	</script>
+	<script src="/plugins/jquery/Transfer.js"></script>
+
+</body>
+
+</html>

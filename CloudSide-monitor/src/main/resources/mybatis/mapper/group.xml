@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudside.mybatis.dao.GroupInfoMapper">
+    <select id="getByName" resultType="groupInfo" parameterType="string">
+        SELECT * from cs_group where login_name like %#{name}% 
+    </select>
+    
+    <select id="getAllGroupWithLv" resultType="groupInfo" parameterType="string">
+        SELECT * from cs_group where group_lv = #{lv}
+    </select>
+    
+    <select id="getAllGroup" resultType="groupInfo">
+		SELECT * from cs_group where 1=1
+		<if test="name!=null">
+			and locate(#{name},name) > 0
+		</if>
+		<if test="groupLv!=null">
+			and locate(#{groupLv},group_lv) > 0
+		</if>
+	</select>
+	
+	<select id="queryById" resultType="groupInfo" parameterType="string">
+        SELECT * from cs_group where id = #{id}
+    </select>
+	
+	
+    <insert id="saveGroup" parameterType="GroupInfo">
+    	insert into cs_group value (#{u.id},#{u.name},#{u.enname},#{u.groupLv},#{u.createDate},#{u.updateDate},#{u.remarks},#{u.delFlag})
+    </insert>
+    
+    <insert id="saveUser2Group" parameterType="list">
+		insert into cs_user_group value
+		<foreach collection='list' item='item' index='index' separator=','>
+			(#{item.groupId},#{item.userId}) 
+		</foreach>
+	</insert>
+    <update id="updateById" parameterType="map">
+		update cs_group set group_lv = #{u.groupLv},del_flag = #{u.delFlag} where id = #{u.id}
+	</update>
+    
+    
+	<delete id="deleteById" parameterType="string">
+		delete from cs_group where id = #{id}
+	</delete>
+	
+	<delete id="deleteUser2GroupById" parameterType="string">
+		delete from cs_user_group where user_id = #{id}
+	</delete>
+		
+	<select id="queryByIdWithOwner" resultType="GroupInfo" parameterType="string">
+        select g.* from cs_user_group u2g,cs_group g where u2g.group_id = g.id and u2g.user_id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: monitor-service
+server:
+  port: 1113
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
+
+# ${server.port}为该服务的端口号
+  instance:
+    status-page-url: http://localhost:${server.port}/home
+
+
+beetl:
+  templatesPath: /templates
+
+#Netty Server's port
+cloudside:
+  serverPort: 10000

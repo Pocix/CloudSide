@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>table模块快速使用</title>
+    <link rel="stylesheet" href="./plugins/layui/css/layui.css" media="all">
+    <style type="text/css">
+    	.main {
+            margin-top: 10px;
+        }
+        .layui-elem-quote {
+		    padding: 5px;
+		}
+        .layui-form-item {
+		    margin-bottom: -5px;
+		    clear: both;
+		}
+    </style>
+</head>
+
+<body>
+	<div class="layui-fluid main">
+		<blockquote class="layui-elem-quote layui-quote-nm">
+		  <form class="layui-form" action="">
+			  <div class="layui-form-item">
+			    <div class="layui-inline">
+			      <label class="layui-form-label">路由策略</label>
+			      <div class="layui-input-inline">
+			        <input type="text" name="path" autocomplete="off" class="layui-input" placeholder='如:"/api-a"' value="${findBy.path}">
+			      </div>
+			    </div>
+			    <div class="layui-inline">
+			      <label class="layui-form-label">服务地址</label>
+			      <div class="layui-input-inline">
+			        <input type="text" name="url" autocomplete="off" class="layui-input" placeholder='如:"192.168.10.123"' value="${findBy.url}">
+			      </div>
+			    </div>
+			    <div class="layui-inline">
+			      <button class="layui-btn" lay-submit="" lay-filter="searchByParam">查询</button>
+			      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			      <button class="layui-btn" lay-submit="" lay-filter="addGateway">新建</button>
+			      <button class="layui-btn" lay-submit="" lay-filter="refreshGateway">一键应用</button>
+			    </div>
+			  </div>
+			</form>
+		</blockquote>
+		
+	    <table class="layui-table" lay-data="{height:315, page:true, id:'test',height: 'full-90'}" lay-filter="test" id="test">
+	        <thead>
+	            <tr>
+	                <th lay-data="{field:'id', width:140}">ID</th>
+	                <th lay-data="{field:'apiName', width:100, sort: true}">路由名称</th>
+	                <th lay-data="{field:'path', width:160,sort: true}">路由策略</th>
+	                <th lay-data="{field:'svcId', width:160,  sort: true}">服务ID</th>
+	                <th lay-data="{field:'url', width:160}">服务地址</th>
+	                <th lay-data="{field:'retryable', width:100}">重处理</th>
+	                <th lay-data="{field:'enabled', width:100}">启用</th>
+	                <th lay-data="{field:'stripPrefix', width:100}">去前缀</th>
+	                <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}"></th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	<% for(vo in GatewayList){ %>
+	        			<tr>
+					      <td>${vo.id }</td>
+					      <td>${vo.apiName }</td>
+					      <td>${vo.path }</td>
+					      <td>${vo.svcId }</td>
+					      <td>${vo.url }</td>
+					      <td>${vo.retryable }</td>
+					      <td>${vo.enabled }</td>
+					      <td>${vo.stripPrefix }</td>
+					    </tr>
+	        	<%}%>
+	        </tbody>
+	    </table>
+	</div>
+    <script src="./plugins/layui/layui.js"></script>
+    
+    <script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+  		<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+	</script>
+	
+    <script>
+        layui.use(['table','layer','form'], function() {
+            var table = layui.table
+            ,form = layui.form
+            ,$ = layui.jquery;
+            
+			//监听工具条
+			table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+			  var data = obj.data //获得当前行数据
+			  ,layEvent = obj.event; //获得 lay-event 对应的值
+			  if(layEvent === 'del'){
+			    layer.confirm('真的删除行么', function(index){
+			      obj.del(); //删除对应行（tr）的DOM结构
+			      layer.close(index);
+			      //向服务端发送删除指令
+			      $.ajax({
+		                type: 'POST',
+		                url: '/gateway/del',
+		                dataType:'json',
+		                data: data,
+		                success: function (result) {
+		                    if (result.errcode == 0) {
+		                        layer.msg('success:操作成功', {icon: 1, time:1000});
+		                    } else {
+		                        consol.alert(result.errcode);
+		                        layer.msg('eles:操作失败！'+result.errmsg, {icon: 2, time:1000});
+		                    }
+		                },
+		                error: function (result, type) {
+		                    layer.msg('error:操作失败！', { icon: 2, time:1000 });
+		                }
+		            });
+			    });
+			  } else if(layEvent === 'edit'){
+					layer.open({
+		        		title:'编辑路由',
+			        	type: 2,
+		        		area: ['700px','430px'],
+		        		maxmin :true,
+		        		content: '/gateway/form?id='+data.id
+	        		});
+			  }
+			});
+          
+	        //监听提交
+	        form.on('submit(searchByParam)', function(data){
+	        	$.ajax({
+				 	type: 'post',
+					url: '/gateway',
+				    dataType:'json',
+				    async:false,
+				    data: data.field,
+				    success: function () {
+				    },
+				    error: function () {
+				         layer.msg('error:操作失败！'+type);
+				    }
+				  });
+	          return false;
+	        });
+	        
+	      //监听提交
+	        form.on('submit(addGateway)', function(data){
+	        	layer.open({
+	        		title:'新增网关路由',
+		        	type: 2,
+	        		area: ['700px','430px'],
+	        		maxmin :true,
+	        		content: '/gateway/form'
+	       		});
+	          return false;
+	        });
+	      
+	        form.on('submit(refreshGateway)', function(data){
+	        	$.ajax({
+	                type: 'get',
+	                url: '${gatewayServer.uri}/refreshRoute',
+	                dataType:'jsonp',
+	                success: function (result) {
+	                    if (result.errcode == 0) {
+	                        layer.msg('success:操作成功', {icon: 1, time:1000});
+	                    } else {
+	                        layer.msg('eles:操作失败！'+result.errmsg, {icon: 2, time:1000});
+	                    }
+	                },
+	                error: function (result, type) {
+	                	if(result.status = '200'){
+	                		layer.msg('success:操作成功', {icon: 1, time:1000});
+	                	}else{
+		                    layer.msg('error:操作失败！'+result.errmsg, { icon: 2, time:1000 });
+	                	}
+	                }
+	            });
+	          return false;
+	        });
+        });
+    </script>
+    
+</body>
+
+</html>

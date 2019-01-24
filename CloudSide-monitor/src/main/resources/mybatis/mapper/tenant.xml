@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudside.mybatis.dao.TenantInfoMapper">
+    <select id="getByLoginName" resultType="tenantInfo" parameterType="string">
+        SELECT * from cs_user where login_name like %#{loginName}% 
+    </select>
+    
+    <select id="getAllUserWithType" resultType="tenantInfo">
+        SELECT * from cs_user where user_type = 1 
+        <if test="loginName!=null">
+			and locate(#{loginName},login_name) > 0
+		</if>
+		<if test="ipaddress!=null">
+			and locate(#{ipaddress},ipaddress) > 0
+		</if>
+    </select>
+    
+    <insert id="saveUser" parameterType="tenantInfo">
+    	insert into cs_user value (#{u.id},#{u.systemName},#{u.clientId},#{u.loginName},#{u.password},#{u.ipaddress},#{u.email},#{u.phone},#{u.mobile},#{u.userType},#{u.createDate},#{u.updateDate},#{u.remarks},#{u.salt},#{u.delFlag})
+    </insert>
+    
+    <select id="queryById" parameterType="string" resultType="tenantInfo">
+		SELECT * from cs_user where id = #{id}  
+	</select>
+	
+	<delete id="deleteById" parameterType="string">
+		delete from cs_user where id = #{id}  
+	</delete>
+		
+	<update id="updateById" parameterType="map">
+		update cs_user set system_name = #{u.systemName},password = #{u.password},ipaddress = #{u.ipaddress},del_flag = #{u.delFlag},salt = #{u.salt} where id = #{u.id}
+	</update>
+</mapper>

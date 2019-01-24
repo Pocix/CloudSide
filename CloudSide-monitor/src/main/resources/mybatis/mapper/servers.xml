@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudside.mybatis.dao.ServerInfoMapper">
+    <select id="queryAllServerArea" resultType="serverAreaInfo">
+        SELECT * from cs_server_area 
+    </select>
+    
+    <insert id="saveServerArea" parameterType="serverAreaInfo">
+    	insert into cs_server_area value (#{id},#{serverAreaName},#{createDate},#{updateDate},#{remarks},#{delFlag})
+    </insert>
+    
+    <select id="queryServerAreaById" parameterType="string" resultType="serverAreaInfo">
+		SELECT * from cs_server_area where id = #{id}    
+	</select>
+	
+	<delete id="deleteServerAreaById" parameterType="string">
+		delete from cs_server_area where id = #{id}    
+	</delete>
+	
+	
+	
+	<delete id="deleteRegServerById" parameterType="string">
+		delete from cs_host_register where server_area_id = #{id}  
+	</delete>
+		
+	<select id="queryAllServers" resultType="ServerInfo">
+		SELECT * from cs_host_register where del_flag=0  
+	</select>
+	
+	<insert id="saveServer" parameterType="ServerInfo">
+		insert into cs_host_register value (#{id},#{hostIp},#{hostPort},#{hostName},#{serverAreaId},#{createDate},#{updateDate},#{remarks},#{delFlag})
+	</insert>
+	
+	<update id="updateServerById" parameterType="map">
+		update cs_host_register set host_ip = #{hostIp},host_port = #{hostPort},host_name = #{hostName},server_area_id = #{serverAreaId},update_date = #{updateDate},remarks = #{remarks},del_flag = #{delFlag} where id = #{id}
+	</update>
+</mapper>

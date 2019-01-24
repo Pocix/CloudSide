@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>table模块快速使用</title>
+    <link rel="stylesheet" href="./plugins/layui/css/layui.css" media="all">
+    
+</head>
+
+<body>
+	<div class="layui-fluid main">
+	    <table class="layui-table" lay-data="{page:true}" lay-filter="tables" id="tables">
+	        <thead>
+	            <tr>
+	                <th lay-data="{field:'serviceId', width:160, sort: true}">服务ID</th>
+	                <th lay-data="{field:'host', width:160}">主机地址</th>
+	                <th lay-data="{field:'port', width:160,  sort: true}">端口</th>
+	                <th lay-data="{field:'uri', width:160}">服务地址</th>
+	                <th lay-data="{field:'secure', width:100}">secure</th>
+	                <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}">操作</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	<% for(vo in SvcList){ %>
+	        			<tr>
+					      <td>${vo.serviceId }</td>
+					      <td>${vo.host }</td>
+					      <td>${vo.port }</td>
+					      <td>${vo.uri }</td>
+					      <td>${vo.secure }</td>
+					    </tr>
+	        	<%}%>
+	        </tbody>
+	    </table>
+	    <table class="layui-hide" id="regTable" lay-filter="regtables"></table>
+	</div>
+
+ <script type="text/html" id="regHost">
+		<form class="layui-form" action="">
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">主机名称</label>
+		    <div class="layui-input-inline">
+		      <input type="text" name="hostName" required lay-verify="required" autocomplete="off" class="layui-input">
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">IP地址</label>
+		    <div class="layui-input-inline">
+		      <input type="text" name="hostIp" readonly value="{{d.host}}" lay-verify="required" class="layui-input">
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">端口</label>
+		    <div class="layui-input-inline">
+		      <input type="text" name="hostPort" readonly value="{{d.port}}" lay-verify="required" class="layui-input">
+		    </div>
+		  </div>
+		 <div class="layui-form-item">
+		    <label class="layui-form-label">是否可用</label>
+    		<div class="layui-input-block">
+      			<input type="checkbox" name="delFlag" lay-skin="switch">
+    		</div>
+		  </div>
+		  <div class="layui-form-item">
+		    <label class="layui-form-label">描述</label>
+		    <div class="layui-input-block">
+		      <textarea name="remarks" class="layui-textarea"></textarea>
+		    </div>
+		  </div>
+		  <div class="layui-form-item">
+		    <div class="layui-input-block">
+		      <button class="layui-btn" lay-submit lay-filter="formDemo">注册</button>
+		    </div>
+		  </div>
+		</form>
+</script>
+	
+    <script src="./plugins/layui/layui.js"></script>
+    <script src="./sys/js/module/svc/services.js"></script>
+    
+    <script type="text/html" id="barDemo">
+		<a class="layui-btn layui-btn-mini" lay-event="reg">注册</a>
+	</script>
+	<script type="text/html" id="relation">
+		<a class="layui-btn layui-btn-mini" lay-event="relation">关联服务域</a>
+	</script>
+	
+    
+</body>
+
+</html>

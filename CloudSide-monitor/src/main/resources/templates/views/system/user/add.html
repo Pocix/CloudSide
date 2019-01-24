@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>table模块快速使用</title>
+<link rel="stylesheet" href="/plugins/layui/css/layui.css" media="all">
+</head>
+
+<body>
+	<div class="layui-fluid main">
+		<form class="layui-form" action="">
+			<input type="text" name="id" value="${user==null?'':user.id}" style="display:none"/>
+			<div class="layui-form-item">
+				<label class="layui-form-label">所属系统</label>
+				<div class="layui-input-block">
+					<input type="text" name="systemName" value="${user==null?'':user.systemName}" required lay-verify="required"
+						placeholder="系统名称" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">帐户名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="loginName" ${user==null?'':'disabled'}  value="${user==null?'':user.loginName}" required lay-verify="required"
+						placeholder="登录名" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">帐户密码</label>
+				<div class="layui-input-inline">
+					<input type="password" name="password" required value="${user==null?'':user.password}"
+						lay-verify="required" placeholder="请输入密码" autocomplete="off"
+						class="layui-input">
+				</div>
+				<div class="layui-input-inline">
+					<input type="checkbox" name="zzz" lay-skin="switch" lay-filter="pwdEnable" lay-text="显示|隐藏">
+				</div>
+				<div class="layui-form-mid layui-word-aux"></div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">客户端IP</label>
+				<div class="layui-input-block">
+					<input type="text" name="ipaddress" required lay-verify="ipaddress" value="${user==null?'':user.ipaddress}"
+						placeholder="客户端IP" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">联系邮箱</label>
+				<div class="layui-input-block">
+					<input type="text" name="email" required lay-verify="email" value="${user==null?'':user.email}"
+						placeholder="联系邮箱" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">联系电话</label>
+				<div class="layui-input-block">
+					<input type="text" name="mobile" required lay-verify="phone" value="${user==null?'':user.mobile}"
+						placeholder="联系电话" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">是否可用</label>
+				<div class="layui-input-block">
+					<input type="checkbox" value="1" ${user==null?'':user.delFlag =='1'?'checked':''} name="delFlag" lay-skin="switch">
+				</div>
+			</div>
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">备注</label>
+				<div class="layui-input-block">
+					<textarea name="remarks" placeholder="请输入内容" class="layui-textarea">${user==null?'':user.remarks}</textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="/plugins/layui/layui.js"></script>
+	<script>
+		layui.use(['form'], function() {
+			var form = layui.form, $ = layui.jquery;
+
+			form.on('switch(pwdEnable)', function(data){
+				if(this.checked){
+					$("input[name='password']").attr("type","text");
+				}else{
+					$("input[name='password']").attr("type","password");
+				}
+			});
+			
+			//监听提交
+			form.on('submit(formDemo)', function(data) {
+	            $.ajax({
+	                type: 'POST',
+	                url: '/user/add',
+	                dataType:'json',
+	                data: data.field,
+	                async: true,
+	                success: function (result) {
+	                    if (result.errcode == 0) {
+	                        layer.msg('success:保存成功', {icon: 1, time:800});
+	                        setTimeout(function(){
+	                            top.layer.closeAll('iframe');
+	                            //刷新父亲的页面
+	                            parent.refreshIframe();
+	                        },1000);
+	                    } else {
+	                        consol.alert(result.errcode);
+	                        layer.msg('eles:保存失败！'+result.errmsg, {icon: 2, time:1000});
+	                    }
+	                },
+	                error: function (result, type) {
+	                    layer.msg('error:保存失败！', { icon: 2, time:1000 });
+	                    window.parent.location.reload(); //刷新父页面
+	                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+	                    parent.layer.close(index);
+	                }
+	            });
+	            console.log(data.field)
+	            return false;
+	        });
+		});
+	</script>
+
+</body>
+
+</html>

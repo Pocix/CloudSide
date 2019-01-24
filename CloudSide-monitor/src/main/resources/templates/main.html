@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+	<script type="text/javascript" src="common/common.js"></script>
+    <style>
+        .info-box {
+            height: 85px;
+            background-color: white;
+            background-color: #ecf0f5;
+        }
+        
+        .info-box .info-box-icon {
+            border-top-left-radius: 2px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 2px;
+            display: block;
+            float: left;
+            height: 85px;
+            width: 85px;
+            text-align: center;
+            font-size: 45px;
+            line-height: 85px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .info-box .info-box-content {
+            padding: 5px 10px;
+            margin-left: 85px;
+            padding-top: 20px;
+        }
+        
+        .info-box .info-box-content .info-box-text {
+            display: block;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+        }
+        
+        .info-box .info-box-content .info-box-number {
+            display: block;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .major {
+            font-weight: 10px;
+            color: #01AAED;
+        }
+        
+        .main {
+            margin-top: 10px;
+        }
+        
+        .main .layui-row {
+            margin: 10px 0;
+        }
+        .layui-elem-quote {
+		    line-height: 26px;
+		    position: relative;
+		}
+        .layui-elem-quote.title {
+		    padding: 10px 15px;
+		    margin-bottom: 0;
+		}
+		
+		.layui-timeline {
+		    margin-top: 10px;
+		}
+		
+		.layui-table img {
+		    max-width: none;
+		}
+    </style>
+</head>
+
+<body>
+    <div class="layui-fluid main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md3">
+                <div class="info-box">
+                    <span class="info-box-icon" style="background-color:#00c0ef !important;color:white;"><i class="fa fa-ambulance" aria-hidden="true"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-number">${SvcCount}</span>
+                        <span class="info-box-text">服务总数</span>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="info-box">
+                    <span class="info-box-icon" style="background-color:#dd4b39 !important;color:white;"><i class="fa fa-google-plus" aria-hidden="true"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-number">${SvcCount}</span>
+                        <span class="info-box-text">可用服务</span>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="info-box">
+                    <span class="info-box-icon" style="background-color:#00a65a !important;color:white;"><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-number">${GatewayCount}</span>
+                        <span class="info-box-text">网关总数</span>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+                <div class="info-box">
+                    <span class="info-box-icon" style="background-color:#f39c12 !important;color:white;"><i class="fa fa-users" aria-hidden="true"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-number">${GatewayEnableCount}</span>
+                        <span class="info-box-text">可用网关</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row">
+        	<div class="layui-col-md4">
+        		<div id="cpu" style="width: 300px;height:300px;"></div>
+        	</div>
+        	<div class="layui-col-md4">
+        		<div id="mem" style="width: 300px;height:300px;"></div>
+        	</div>
+        	<div class="layui-col-md4">
+        		<div id="jvm" style="width: 300px;height:300px;"></div>
+        	</div>
+       	</div>
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md6">
+            	<blockquote class="layui-elem-quote title">更新日志</blockquote>
+                <ul class="layui-timeline">
+                	<li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">11月02日(v1.0.0_1)</h3>
+                            <p>
+                                <h3>路由</h3>
+                                <ul>
+                                    <li>固定了网关服务id为'API-GATEWAY',并以此获取网关uri地址</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </li>
+                	<li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">10月31日(v1.0.0_1)</h3>
+                            <p>
+                                <h3>用户－权限</h3>
+                                <ul>
+                                    <li>完成用户相关功能、权限相关功能</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </li>
+                	<li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">10月9日(v1.0.0_1)</h3>
+                            <h3>调整路由页及服务页</h3>
+                            <ul>
+                                <li>编写页面，如题</li>
+                            </ul>
+                            <h3>集成lay-ui</h3>
+                            <ul>
+                                <li>借用kit admin后台模板，感谢kit admin作者<a href="http://kit.zhengjinfan.cn/">kit.zhengjinfan.cn</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">8月30日(v1.0.0)</h3>
+                            <h3>实现动态路由配置</h3>
+                            <ul>
+                                <li>自定义zuul路由，结合数据库方式，在界面化配置路由，更改访问路径，分流服务</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <div class="layui-timeline-title">2017年 初始化spirng cloud项目</div>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <div class="layui-timeline-title">更新日志</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-col-md6">
+            	<blockquote class="layui-elem-quote title">待解决</blockquote>
+            	用户权限分组：删除时，未做级联关联
+           	</div>
+        </div>
+    </div>
+    <script src="./plugins/echart/echarts.min.js"></script>
+    <script src="./plugins/layui/layui.js"></script>
+    <script>
+    	
+    	var myChart_cpu = echarts.init(document.getElementById('cpu'));
+    	var myChart_mem = echarts.init(document.getElementById('mem'));
+    	var myChart_jvm = echarts.init(document.getElementById('jvm'));
+    	var option = {
+    		    tooltip : {
+    		        formatter: "{b} : {c}%"
+    		    },
+    		    toolbox: {
+    		        feature: {
+    		            restore: {},
+    		            saveAsImage: {}
+    		        }
+    		    },
+    		    textStyle : {
+    		    	fontSize : 10
+    		    },
+    		    series: [
+    		        {
+    		            name: '{name}',
+    		            type: 'gauge',
+    		            detail: {formatter:'{value}%'},
+    		            data: [{value: 50, name: '{name}'}]
+    		        }
+    		    ]
+    		};
+
+    		setInterval(function () {
+    		    option.series[0].data[0].name = "CPU指标";
+    		    option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+    		    myChart_cpu.setOption(option, true);
+    		    option.series[0].data[0].name = "内存指标";
+    		    option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+    		    myChart_mem.setOption(option, true);
+    		    option.series[0].data[0].name = "JVM指标";
+    		    option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+    		    myChart_jvm.setOption(option, true);
+    		},2000);
+    	myChart_cpu.setOption(option);
+    	myChart_mem.setOption(option);
+    	myChart_jvm.setOption(option);
+        layui.use('jquery', function() {
+            var $ = layui.jquery;
+            $('#test').on('click', function() {
+                parent.message.show({
+                    skin: 'cyan'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

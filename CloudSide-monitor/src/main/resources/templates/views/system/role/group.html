@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>table模块快速使用</title>
+    <link rel="stylesheet" href="/plugins/layui/css/layui.css" media="all">
+    <style type="text/css">
+    	.main {
+            margin-top: 10px;
+        }
+        .layui-elem-quote {
+		    padding: 5px;
+		}
+        .layui-form-item {
+		    margin-bottom: -5px;
+		    clear: both;
+		}
+    </style>
+</head>
+
+<body>
+	<div class="layui-fluid main">
+		<blockquote class="layui-elem-quote layui-quote-nm">
+		  <form class="layui-form" action="">
+			  <div class="layui-form-item">
+			    <div class="layui-inline">
+			      <label class="layui-form-label">分组名</label>
+			      <div class="layui-input-inline">
+			        <input type="text" name="name" autocomplete="off" class="layui-input" placeholder='如:"营销"' value="${findBy.name}">
+			      </div>
+			    </div>
+			    <div class="layui-inline">
+			      <label class="layui-form-label">等级</label>
+			      <div class="layui-input-inline">
+			        <input type="text" name="groupLv" autocomplete="off" class="layui-input" placeholder='如:"1"' value="${findBy.groupLv}">
+			      </div>
+			    </div>
+			    <div class="layui-inline">
+			      <button class="layui-btn" lay-submit="" lay-filter="searchBy">查询</button>
+			      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			      <button class="layui-btn" lay-submit="" lay-filter="addGroup">新建</button>
+			    </div>
+			  </div>
+			</form>
+		</blockquote>
+		
+	    <table class="layui-table" lay-data="{height:315, page:true, id:'test',height: 'full-90'}" lay-filter="test" id="test">
+	        <thead>
+	            <tr>
+	                <th lay-data="{field:'id', width:140, sort: true}">ID</th>
+	                <th lay-data="{field:'name', width:160,sort: true}">分组名称</th>
+	                <th lay-data="{field:'enname', width:160,  sort: true}">英文名称</th>
+	                <th lay-data="{field:'groupLv', width:160}">分组等级</th>
+	                <th lay-data="{field:'createDate', width:100, sort: true}">创建时间</th>
+	                <th lay-data="{field:'delFlag', width:100, sort: true}">是否可用</th>
+	                <th lay-data="{field:'remarks', width:100, sort: true}">备注</th>
+	                <th lay-data="{fixed: 'right', width:160, align:'center', toolbar: '#barDemo'}"></th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	<% for(vo in groups){ %>
+	        			<tr>
+					      <td>${vo.id }</td>
+					      <td>${vo.name }</td>
+					      <td>${vo.enname }</td>
+					      <td>${vo.groupLv }</td>
+					      <td>${vo.createDate,dateFormat="yyyy-MM-dd HH:mm:ss" }</td>
+					      <td>${vo.delFlag }</td>
+					      <td>${vo.remarks }</td>
+					    </tr>
+	        	<%}%>
+	        </tbody>
+	    </table>
+	</div>
+    <script src="/plugins/layui/layui.js"></script>
+    
+    <script type="text/html" id="barDemo">
+  		<a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+  		<a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="relation">网关</a>
+  		<a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>
+	</script>
+	
+    <script>
+        layui.use(['table','layer','form'], function() {
+            var table = layui.table
+            ,form = layui.form
+            ,$ = layui.jquery;
+            
+			//监听工具条
+			table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+			  var data = obj.data //获得当前行数据
+			  ,layEvent = obj.event; //获得 lay-event 对应的值
+			  if(layEvent === 'relation'){
+				  layer.open({
+		        		title:'关联网关资源',
+			        	type: 2,
+		        		area: ['700px','430px'],
+		        		maxmin :true,
+		        		content: '/group/group2route?id='+data.id
+	        		});
+			  } else if(layEvent === 'del'){
+			    layer.confirm('真的删除此行么?', function(index){
+			      obj.del(); //删除对应行（tr）的DOM结构
+			      layer.close(index);
+			      //向服务端发送删除指令
+			      $.ajax({
+		                type: 'POST',
+		                url: '/group/del',
+		                dataType:'json',
+		                data: data,
+		                success: function (result) {
+		                    if (result.errcode == 0) {
+		                        layer.msg('success:删除成功', {icon: 1, time:1000});
+		                    } else {
+		                        consol.alert(result.errcode);
+		                        layer.msg('eles:删除失败！'+result.errmsg, {icon: 2, time:1000});
+		                    }
+		                },
+		                error: function (result, type) {
+		                    layer.msg('error:删除失败！', { icon: 2, time:1000 });
+		                }
+		            });
+			    });
+			  } else if(layEvent === 'edit'){
+			    layer.open({
+	        		title:'编辑用户',
+		        	type: 2,
+	        		area: ['700px','430px'],
+	        		maxmin :true,
+	        		content: '/group/form?id='+data.id
+        		});
+			  }
+			});
+          
+	        //监听提交
+	        form.on('submit(searchBy)', function(data){
+	        	$.ajax({
+				 	type: 'post',
+					url: '/group/list',
+				    dataType:'json',
+				    async:false,
+				    data: data.field,
+				    success: function () {
+				    },
+				    error: function () {
+				         layer.msg('error:操作失败！'+type);
+				    }
+				  });
+	          return false;
+	        });
+	        
+	      	//监听提交
+	        form.on('submit(addGroup)', function(data){
+	        	layer.open({
+	        		title:'新增用户',
+		        	type: 2,
+	        		area: ['700px','430px'],
+	        		maxmin :true,
+	        		content: '/group/form'
+	       		});
+	          return false;
+	        });
+        });
+    </script>
+    
+</body>
+
+</html>

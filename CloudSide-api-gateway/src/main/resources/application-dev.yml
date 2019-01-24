@@ -1,0 +1,18 @@
+server:
+  address: localhost
+
+spring:
+  zipkin:
+    base-url: http://localhost:1113
+
+#断路器
+zuul:
+  routes:
+    feign_srv_url:
+      path: /feign/**
+      url: http://localhost:3333/
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/

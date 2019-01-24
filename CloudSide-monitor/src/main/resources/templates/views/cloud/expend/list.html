@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" src="/common/common.js"></script>
+<style type="text/css">
+		.info-box {
+			position: relative;
+            height: 185px;
+            background-color: white;
+            background-color: #ecf0f5;
+            max-width: 300px;
+            width:90%;
+            margin: 5px;
+            
+            border-top-left-radius: 2px;
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+            border-bottom-left-radius: 2px;
+        }
+        
+        .info-box .info-box-icon {
+            border-top-left-radius: 2px;
+		    border-top-right-radius: 2px;
+		    border-bottom-right-radius: 2px;
+		    border-bottom-left-radius: 2px;
+		    display: block;
+		    float: left;
+		    height: 80px;
+		    width: 81px;
+		    text-align: center;
+		    font-size: 45px;
+		    line-height: 85px;
+		    background: rgba(26, 108, 176, 0.8);
+		    margin: 5px;
+        }
+        
+        .info-box .info-box-content {
+        	position: relative;
+            padding: 5px 10px;
+            margin-left: 85px;
+            min-width: 150px;
+            /*padding-top: 20px;*/
+        }
+        
+        .info-box .info-box-state {
+        	    position: absolute;
+			    top: 85px;
+		        margin: 5px;
+			    text-align: left;
+			    color: #0d83e8;
+        }
+        
+        .info-box .info-box-state .info-box-state-item {
+			    top: 85px;
+		        margin: 5px;
+            	font-size: 16px;
+			    text-align: left;
+			    color: #0d83e8;
+        }
+        
+        .info-box .info-box-menu {
+        	    position: absolute;
+        	    font-size: 18px;
+			    width: 100%;
+			    top: 2px;
+			    right: 5px;
+			    text-align: -webkit-right;
+			    color: #0883ec;
+        }
+        
+        .info-box .info-box-content .info-box-text {
+            display: block;
+            font-size: 14px;
+            overflow: hidden;
+            text-align: left;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+            word-wrap:break-word;
+        }
+        
+        .info-box .info-box-content .info-box-number {
+            display: block;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .main {
+            margin-top: 10px;
+        }
+        
+        .layui-form-item {
+		    margin-bottom: 0px;
+		    clear: both;
+		}
+				
+</style>
+</head>
+
+<body>
+	<div class="layui-fluid main">
+		<div class="layui-row">
+			<div class="layui-col-md12">
+			<blockquote class="layui-elem-quote layui-quote-nm">
+			  <form class="layui-form" action="">
+				  <div class="layui-form-item">
+				    <div class="layui-inline">
+				      <label class="layui-form-label">主机IP</label>
+				      <div class="layui-input-inline">
+				        <input type="tel" name="phone" autocomplete="off" class="layui-input">
+				      </div>
+				    </div>
+				    <div class="layui-inline">
+				      <button class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+				      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				    </div>
+				  </div>
+				</form>
+			</blockquote>
+			</div>
+		</div>
+		<div class="layui-row">
+            <div class="layui-col-md3">
+                <div class="info-box">
+                	<div class="info-box-menu"><a href="#" title="Remove"><i class="fa fa-th-list" aria-hidden="true"></i> </a>
+                	</div>
+                    <span class="info-box-icon" style="color:white;"><i class="fa fa-sitemap" aria-hidden="true"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">名称：订单服务域</span>
+                        <span class="info-box-text">描述：主要提供订单相关服务</span>
+                    </div>
+                    <div class="info-box-state">
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.1</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Up
+                    	</div>
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.21</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Up
+                    	</div>
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.1</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Up
+                    	</div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+            	<div class="info-box">
+                	<div class="info-box-menu"><a href="#" title="Remove"><i class="fa fa-th-list" aria-hidden="true"></i> </a>
+                	</div>
+                    <span class="info-box-icon" style="color:white;"><i class="fa fa-sitemap" aria-hidden="true"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">名称：订单服务域</span>
+                        <span class="info-box-text">描述：主要提供订单相关服务</span>
+                    </div>
+                    <div class="info-box-state">
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.1</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Running
+                    	</div>
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.21</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Up
+                    	</div>
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.1</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Running
+                    	</div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+            	<div class="info-box">
+                	<div class="info-box-menu"><a href="#" title="Remove"><i class="fa fa-th-list" aria-hidden="true"></i> </a>
+                	</div>
+                    <span class="info-box-icon" style="color:white;"><i class="fa fa-sitemap" aria-hidden="true"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">名称：订单服务域</span>
+                        <span class="info-box-text">描述：主要提供订单相关服务</span>
+                    </div>
+                    <div class="info-box-state">
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.1</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Running
+                    	</div>
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.21</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Up
+                    	</div>
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.1</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Up
+                    	</div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md3">
+            	<div class="info-box">
+                	<div class="info-box-menu"><a href="#" title="Remove"><i class="fa fa-th-list" aria-hidden="true"></i> </a>
+                	</div>
+                    <span class="info-box-icon" style="color:white;"><i class="fa fa-sitemap" aria-hidden="true"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">名称：订单服务域</span>
+                        <span class="info-box-text">描述：主要提供订单相关服务</span>
+                    </div>
+                    <div class="info-box-state">
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.1</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Up
+                    	</div>
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.21</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Up
+                    	</div>
+                    	<div class="info-box-state-item">
+                    		<i class="fa fa-desktop" aria-hidden="true"></i><a href="#"> 10.113.10.1</a>
+                    		<a href="javascript:return false;" title="Start" style="cursor: default;opacity: 0.2;"><i class="fa fa-play-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Stop"><i class="fa fa-stop-circle-o" aria-hidden="true"></i> </a>
+                    		<a href="#" title="Remove"><i class="fa fa-times-circle-o" aria-hidden="true"></i> </a>
+                    		Running
+                    	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-row">
+			<div class="layui-col-md12">
+				<font color="red">*注:</font><font color="#999">可手动扩展服务节点，同时，也可用通过阀值自动增加服务节点。</font>
+			</div>
+		</div>
+	</div>
+	<script src="/plugins/layui/layui.js"></script>
+	<script>
+		layui.use(['form','element'], function() {
+			var form = layui.form, $ = layui.jquery;
+			//监听提交
+		});
+	</script>
+
+</body>
+
+</html>

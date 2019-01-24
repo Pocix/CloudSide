@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>table模块快速使用</title>
+<link rel="stylesheet" href="/plugins/layui/css/layui.css" media="all">
+</head>
+
+<body>
+	<div class="layui-fluid main">
+		<form class="layui-form" action="">
+			<input type="text" name="id" value="${group==null?'':group.id}" style="display:none"/>
+			<div class="layui-form-item">
+				<label class="layui-form-label">分组名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="name" ${group==null?'':'disabled'} value="${group==null?'':group.name}" required lay-verify="required"
+						placeholder="分组名称" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">英文名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="enname" ${group==null?'':'disabled'}  value="${group==null?'':group.enname}" required lay-verify="required"
+						placeholder="英文名称" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">分组等级</label>
+				<div class="layui-input-inline">
+					<input type="text" name="groupLv" value="${group==null?'':group.groupLv}" required lay-verify="required"
+						placeholder="分组等级" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">是否可用</label>
+				<div class="layui-input-block">
+					<input type="checkbox" value="1" ${group==null?'':group.delFlag =='1'?'checked':''} name="delFlag" lay-skin="switch">
+				</div>
+			</div>
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">备注</label>
+				<div class="layui-input-block">
+					<textarea name="remarks" placeholder="请输入内容" class="layui-textarea">${group==null?'':group.remarks}</textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+					<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="/plugins/layui/layui.js"></script>
+	<script>
+		layui.use(['form'], function() {
+			var form = layui.form, $ = layui.jquery;
+
+			//监听提交
+			form.on('submit(formDemo)', function(data) {
+	            //roleId在这里没多少用
+	            $.ajax({
+	                type: 'POST',
+	                url: '/group/add',
+	                dataType:'json',
+	                data: data.field,
+	                async: true,
+	                success: function (result) {
+	                    if (result.errcode == 0) {
+	                        layer.msg('success:保存成功', {icon: 1, time:800});
+	                        setTimeout(function(){
+	                            top.layer.closeAll('iframe');
+	                            //刷新父亲的页面
+	                            parent.refreshIframe();
+	                        },1000);
+	                    } else {
+	                        consol.alert(result.errcode);
+	                        layer.msg('eles:保存失败！'+result.errmsg, {icon: 2, time:1000});
+	                    }
+	                },
+	                error: function (result, type) {
+	                    layer.msg('error:保存失败！', { icon: 2, time:1000 });
+	                    window.parent.location.reload(); //刷新父页面
+	                    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+	                    parent.layer.close(index);
+	                }
+	            });
+	            console.log(data.field)
+	            return false;
+	        });
+		});
+	</script>
+
+</body>
+
+</html>

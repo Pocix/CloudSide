@@ -1,0 +1,18 @@
+server:
+  address: 172.17.1.1
+
+spring:
+  zipkin:
+    base-url: http://172.17.1.1:1113
+
+#断路器
+zuul:
+  routes:
+    feign_srv_url:
+      path: /feign/**
+      url: http://172.17.1.1:3333/
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://172.17.1.1:1111/eureka/

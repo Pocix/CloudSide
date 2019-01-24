@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+	<script type="text/javascript" src="common/common.js"></script>
+    <link rel="stylesheet" href="./plugins/layui/css/layui.css" media="all">
+    <style>
+        .info-box {
+            height: 85px;
+            background-color: white;
+            background-color: #ecf0f5;
+        }
+        
+        .info-box .info-box-icon {
+            border-top-left-radius: 2px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 2px;
+            display: block;
+            float: left;
+            height: 85px;
+            width: 85px;
+            text-align: center;
+            font-size: 45px;
+            line-height: 85px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .info-box .info-box-content {
+            padding: 5px 10px;
+            margin-left: 85px;
+            padding-top: 20px;
+        }
+        
+        .info-box .info-box-content .info-box-text {
+            display: block;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
+        }
+        
+        .info-box .info-box-content .info-box-number {
+            display: block;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .major {
+            font-weight: 10px;
+            color: #01AAED;
+        }
+        
+        .main {
+            margin-top: 10px;
+        }
+        
+        .main .layui-row {
+            margin: 10px 0;
+        }
+        .layui-elem-quote {
+		    line-height: 26px;
+		    position: relative;
+		}
+        .layui-elem-quote.title {
+		    padding: 10px 15px;
+		    margin-bottom: 0;
+		}
+		
+		.layui-timeline {
+		    margin-top: 10px;
+		}
+		
+		.layui-table img {
+		    max-width: none;
+		}
+    </style>
+</head>
+
+<body>
+    <div class="layui-fluid main">
+        <div class="layui-row">
+        	<div class="layui-col-md12">
+        		<table class="layui-table">
+					<colgroup>
+						<col width="150">
+						<col>
+					</colgroup>
+					<tbody>
+						<tr>
+							<td colspan="2">思路：<br>
+								服务自动发现并在线注册<br>
+								服务访问时，通过权限控制来控制路由<br>
+								集成shiro/oauth2 来控制权限、角色、资源<br>
+								待开发：<br>
+								&emsp;dashboard<br>
+								&emsp;完善细节<br>
+								云市场：<br>
+								&emsp;1、基于docker：初步想法，用文件上传JAR包，结合在线生成DOCKERFILE文件，并用消息队列方式判断容器资源情况（前提是开发并部署自动部分功能）来进行自动根据脚本部署。<br>
+								&emsp;2、基本windows/linux平台；文件上传JAR包，直接生成bat/sh脚本运行，利用ssh远程传输jar跟命令脚本并执行。
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<img src="/sys/images/springcloud-frame.jpg" width="600px"/>
+							</td>
+							<td style="vertical-align: text-top;">
+					        		<blockquote class="layui-elem-quote title">系统基本参数</blockquote>
+					        		<table class="layui-table">
+										<colgroup>
+											<col width="150">
+											<col>
+										</colgroup>
+										<tbody>
+											<tr>
+												<td>当前版本</td>
+												<td class="version">1.0.0</td>
+											</tr>
+											<tr>
+												<td>开发作者</td>
+												<td class="author">Poci</td>
+											</tr>
+											<tr>
+												<td>网站首页</td>
+												<td class="homePage"></td>
+											</tr>
+											<tr>
+												<td>服务器环境</td>
+												<td class="server"></td>
+											</tr>
+											<tr>
+												<td>数据库版本</td>
+												<td class="dataBase"></td>
+											</tr>
+											<tr>
+												<td>最大上传限制</td>
+												<td class="maxUpload"></td>
+											</tr>
+											<tr>
+												<td>当前用户权限</td>
+												<td class="userRights"></td>
+											</tr>
+										</tbody>
+									</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+        	</div>
+       	</div>
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md6">
+            	<blockquote class="layui-elem-quote title">更新日志</blockquote>
+                <ul class="layui-timeline">
+                	<li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">11月22日(v1.0.0_2)</h3>
+                            <p>
+                                <h3>Netty</h3>
+                                <ul>
+                                    <li>结合Netty,用于服务器端与终端的交互通信</li>
+                                    <li>终端的心跳监测与重连功能</li>
+                                    <li>文件的传输</li>
+                                </ul>
+                                <h3>Sigar</h3>
+                                <ul>
+                                    <li>用于监测终端的系统环境信息</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </li>
+                	<li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">11月02日(v1.0.0_1)</h3>
+                            <p>
+                                <h3>路由</h3>
+                                <ul>
+                                    <li>固定了网关服务id为'API-GATEWAY',并以此获取网关uri地址,用于“一键应用”</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </li>
+                	<li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">10月31日(v1.0.0_1)</h3>
+                            <p>
+                                <h3>用户－权限</h3>
+                                <ul>
+                                    <li>完成用户相关功能、权限相关功能</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </li>
+                	<li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">10月9日(v1.0.0_1)</h3>
+                            <h3>调整路由页及服务页</h3>
+                            <ul>
+                                <li>编写页面，如题</li>
+                            </ul>
+                            <h3>集成lay-ui</h3>
+                            <ul>
+                                <li>借用kit admin后台模板，感谢kit admin作者<a href="http://kit.zhengjinfan.cn/">kit.zhengjinfan.cn</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">8月30日(v1.0.0)</h3>
+                            <h3>实现动态路由配置</h3>
+                            <ul>
+                                <li>自定义zuul路由，结合数据库方式，在界面化配置路由，更改访问路径，分流服务</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <div class="layui-timeline-title">2017年 初始化spirng cloud项目</div>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <div class="layui-timeline-title">更新日志</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-col-md6">
+            	<blockquote class="layui-elem-quote title">待解决</blockquote>
+            	用户权限分组：删除时，未做级联关联
+           	</div>
+        </div>
+    </div>
+    <script src="./plugins/layui/layui.js"></script>
+    <script>
+        layui.use('jquery', function() {
+            var $ = layui.jquery;
+            $('#test').on('click', function() {
+                parent.message.show({
+                    skin: 'cyan'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
